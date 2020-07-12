@@ -42,54 +42,47 @@
             android:paddingLeft="@dimen/login_edit_text_space"
             android:paddingRight="@dimen/login_edit_text_space"
             android:textSize="@dimen/login_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+            app:layout_constraintBottom_toTopOf="@+id/editTextConfirmPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btnLogin"
+        <EditText
+            android:id="@+id/editTextConfirmPassword"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_button_height"
+            android:layout_height="@dimen/login_edit_text_height"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/button_riple_bg"
-            android:text="@string/login_sing_in"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/login_text_xl_size"
-            app:layout_constraintBottom_toTopOf="@+id/textViewForgotPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:text="@string/login_forgot_password"
-            android:textColor="@color/colorSecondayText"
-            app:layout_constraintBottom_toTopOf="@+id/btnLoginInGoogle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btnLoginInGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_button_height"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/button_ripple_google"
-            android:text="@string/login_sign_in_google"
-            android:textColor="@color/colorPrimaryText"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edittex_rounded"
+            android:hint="@string/login_confirm_password"
+            android:inputType="textPassword"
+            android:paddingLeft="@dimen/login_edit_text_space"
+            android:paddingRight="@dimen/login_edit_text_space"
+            android:textSize="@dimen/login_text_size"
             app:layout_constraintBottom_toTopOf="@+id/btnSignUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_button_height"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:background="@drawable/button_riple_bg"
+            android:text="@string/login_sing_up"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/login_text_xl_size"
+            app:layout_constraintBottom_toTopOf="@+id/btnGoLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+        <Button
+            android:id="@+id/btnGoLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_button_xl_height"
             android:background="@drawable/button_ripple"
