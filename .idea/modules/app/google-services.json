@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "404381708916",
+    "firebase_url": "https://cproject-fc224.firebaseio.com",
+    "project_id": "cproject-fc224",
+    "storage_bucket": "cproject-fc224.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404381708916:android:d5d8eb6aa97c7785ff5721",
+        "android_client_info": {
+          "package_name": "com.jesus.cproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404381708916-s140ib05lfclgubtisgvfjmf604kfjtd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jesus.cproject",
+            "certificate_hash": "97130fa8fae76e2dab44f20c50a93d7817c9ecbf"
+          }
+        },
+        {
+          "client_id": "404381708916-22c56r68q04cmg0rv709tb4pbe4ocp9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvSSJZZxw9Lhh2jdJMMLWnWsAsZFgyqlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404381708916-22c56r68q04cmg0rv709tb4pbe4ocp9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
