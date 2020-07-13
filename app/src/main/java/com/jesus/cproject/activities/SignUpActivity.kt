@@ -11,7 +11,6 @@ import com.jesus.cproject.activities.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
-
 class SignUpActivity : AppCompatActivity() {
     private val mAuth: FirebaseAuth by lazy { getInstance() }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +58,14 @@ class SignUpActivity : AppCompatActivity() {
             this
         ) { task ->
             if (task.isSuccessful) {
-                // Sign in success, update UI with the signed-in user's information
-                toast("Un correo se te ha enviado. porfavor confirma.")
-                goToActivity<LoginActivity> {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                mAuth.currentUser!!.sendEmailVerification().addOnCompleteListener {
+                    // Sign in success, update UI with the signed-in user's information
+                    toast("Un correo se te ha enviado. porfavor confirma.")
+                    goToActivity<LoginActivity> {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                 }
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
             } else {
                 // If sign in fails, display a message to the user.
                 toast("Ocurrio un error inesperado. porfavor intentelo de nuevo.")
