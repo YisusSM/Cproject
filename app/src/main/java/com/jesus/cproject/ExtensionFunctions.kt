@@ -2,12 +2,17 @@ package com.jesus.cproject
 
 import android.app.Activity
 import android.content.Intent
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.EditText
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
+import java.util.regex.Pattern
+
 
 fun Int.isNatural() = this >= 0
 
@@ -48,5 +53,39 @@ inline fun <reified T : Activity> Activity.goToActivity(noinline init: Intent.()
 fun Activity.goToActivityResult(action: String, requesCode: Int, init: Intent.() -> Unit = {}) {
     val intent = Intent(action)
     intent.init()
-    startActivityForResult(intent,requesCode)
+    startActivityForResult(intent, requesCode)
 }
+
+fun EditText.validate(validation: (String) -> Unit){
+    this.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(p0: Editable?) {
+            validation(p0.toString())
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+        }
+
+    })
+}
+
+ fun Activity.isValidEmail(email: String): Boolean {
+    val pattern = Patterns.EMAIL_ADDRESS
+    return pattern.matcher(email).matches()
+}
+
+ fun Activity.isValidPassword(password: String): Boolean {
+    // Necesita contener -->      1Numero / 1 Minuscula / 1 Mayuscula / 1 Especial / Minimo 6 Caracteres
+    val passwordPattern =
+     "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{6,}$"
+    val pattern = Pattern.compile(passwordPattern)
+    return pattern.matcher(password).matches()
+}
+
+fun Activity.isValidConfirmPassword(password: String, confirmPassword: String): Boolean {
+    return password == confirmPassword
+}
+

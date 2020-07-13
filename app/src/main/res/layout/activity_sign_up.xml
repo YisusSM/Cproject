@@ -10,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -86,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_button_xl_height"
             android:background="@drawable/button_ripple"
-            android:text="@string/login_create_account"
+            android:text="@string/login_go_login"
             android:textColor="@color/colorSecondayText"
             android:textSize="@dimen/login_text_size"
             app:layout_constraintBottom_toBottomOf="parent"

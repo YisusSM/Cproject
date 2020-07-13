@@ -11,23 +11,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.ForgotPasswordActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name=".activities.SignUpActivity">
+
+        </activity>
+        <activity
+            android:name=".activities.login.LoginActivity"
+            android:theme="@style/NoPreview"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.login.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
 
         </activity>
-        <activity
-            android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>
