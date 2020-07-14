@@ -14,7 +14,7 @@ import com.jesus.mylibrary.ToolbarActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : ToolbarActivity() {
-    private lateinit var adapter: PagerAdapter
+
     private var prevBottomSelected: MenuItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +27,17 @@ class MainActivity : ToolbarActivity() {
     }
 
     private fun getPagerAdapter(): PagerAdapter {
-        adapter = PagerAdapter(supportFragmentManager)
-        adapter.addFragment(ChatFragment())
+       val adapter = PagerAdapter(supportFragmentManager)
         adapter.addFragment(InfoFragment())
         adapter.addFragment(RatesFragment())
+        adapter.addFragment(ChatFragment())
         return adapter
     }
 
     private fun setUpViewPager(adapter: PagerAdapter) {
         viewPager.adapter = adapter
-        viewPager.addOnAdapterChangeListener(object : ViewPager.OnPageChangeListener,
-            ViewPager.OnAdapterChangeListener {
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {}
-            override fun onAdapterChanged(viewPager: ViewPager, oldAdapter: androidx.viewpager.widget.PagerAdapter?, newAdapter: androidx.viewpager.widget.PagerAdapter?) {}
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -57,8 +55,6 @@ class MainActivity : ToolbarActivity() {
                 prevBottomSelected = btnNavigation.menu.getItem(position)
 
             }
-
-
         })
 
     }

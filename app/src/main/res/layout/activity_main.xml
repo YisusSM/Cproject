@@ -18,6 +18,10 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:elevation="16dp"
+        app:itemIconTint="@drawable/btn_navigation_color"
+        app:itemBackground="@drawable/btn_navigation_ripple"
+        app:itemTextColor="@drawable/btn_navigation_color"
+
         app:menu="@menu/bottom_navigation_menu"/>
 
     <androidx.viewpager.widget.ViewPager
