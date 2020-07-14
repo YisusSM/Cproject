@@ -10,6 +10,7 @@
     <color name="colorIcon">#ffffff</color>
     <color name="colorDivider">#bdbdbd</color>
     <color name="colorChatBg">#ccc</color>
+    <color name="white">#fff</color>
 
 
     <color name="colorGooglePlus">#dd4b39</color>
