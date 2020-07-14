@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import java.util.regex.Pattern
 
@@ -87,5 +88,10 @@ fun EditText.validate(validation: (String) -> Unit){
 
 fun Activity.isValidConfirmPassword(password: String, confirmPassword: String): Boolean {
     return password == confirmPassword
+
+
+}
+private fun Activity.addOnAdapterChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
+
 }
 
