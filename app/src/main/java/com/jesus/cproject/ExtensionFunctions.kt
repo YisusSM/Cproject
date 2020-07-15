@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
+import com.jesus.cproject.utils.CircleTransform
+import com.squareup.picasso.Picasso
 import java.util.regex.Pattern
 
 
@@ -41,8 +44,10 @@ fun Activity.snackBar(
 
 fun ViewGroup.inflate(layoutId: Int) = LayoutInflater.from(context).inflate(layoutId, this, false)!!
 
-//fun ImageView.loadByUrl(url: String) = Picasso.get().load(url).into(this)
-//fun ImageView.loadByResource(resource: Int) = Picasso.get().load(resource).into(this)
+fun ImageView.loadByUrl(url: String) =
+    Picasso.get().load(url).resize(100, 100).centerCrop().transform(CircleTransform()).into(this)
+
+fun ImageView.loadByResource(resource: Int) = Picasso.get().load(resource).into(this)
 
 inline fun <reified T : Activity> Activity.goToActivity(noinline init: Intent.() -> Unit = {}) {
     val intent = Intent(this, T::class.java)
@@ -57,7 +62,7 @@ fun Activity.goToActivityResult(action: String, requesCode: Int, init: Intent.()
     startActivityForResult(intent, requesCode)
 }
 
-fun EditText.validate(validation: (String) -> Unit){
+fun EditText.validate(validation: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
             validation(p0.toString())
@@ -73,15 +78,15 @@ fun EditText.validate(validation: (String) -> Unit){
     })
 }
 
- fun Activity.isValidEmail(email: String): Boolean {
+fun Activity.isValidEmail(email: String): Boolean {
     val pattern = Patterns.EMAIL_ADDRESS
     return pattern.matcher(email).matches()
 }
 
- fun Activity.isValidPassword(password: String): Boolean {
+fun Activity.isValidPassword(password: String): Boolean {
     // Necesita contener -->      1Numero / 1 Minuscula / 1 Mayuscula / 1 Especial / Minimo 6 Caracteres
     val passwordPattern =
-     "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{6,}$"
+        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{6,}$"
     val pattern = Pattern.compile(passwordPattern)
     return pattern.matcher(password).matches()
 }
@@ -91,6 +96,7 @@ fun Activity.isValidConfirmPassword(password: String, confirmPassword: String): 
 
 
 }
+
 private fun Activity.addOnAdapterChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
 
 }
