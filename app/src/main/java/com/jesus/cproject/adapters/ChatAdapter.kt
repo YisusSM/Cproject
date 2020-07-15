@@ -42,7 +42,7 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
     class ViewHolderR(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(message: Message) = with(itemView) {
             textViewMessageRight.text = message.message
-            textViewTimeRight.text = SimpleDateFormat("hh:mm").format(message.sentAt)
+            textViewTimeRight.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
             //Picasso load image here
             imageViewProfileRight.loadByUrl(message.profileImageURL)
         }
