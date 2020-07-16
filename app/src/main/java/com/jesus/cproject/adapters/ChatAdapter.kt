@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jesus.cproject.R
 import com.jesus.cproject.inflate
+import com.jesus.cproject.loadByResource
 import com.jesus.cproject.loadByUrl
 import com.jesus.cproject.models.Message
 import kotlinx.android.synthetic.main.fragment_chat_item_left.view.*
@@ -44,7 +45,12 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
             textViewMessageRight.text = message.message
             textViewTimeRight.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
             //Picasso load image here
-            imageViewProfileRight.loadByUrl(message.profileImageURL)
+            if (message.profileImageURL.isNotEmpty()) {
+                imageViewProfileRight.loadByUrl(message.profileImageURL)
+            } else {
+                imageViewProfileRight.loadByResource(R.drawable.ic_person)
+            }
+
         }
     }
 
@@ -53,7 +59,11 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
             textViewMessageLeft.text = message.message
             textViewTimeLeft.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
             //Picasso load image here
-            imageViewProfileLeft.loadByUrl(message.profileImageURL)
+            if (message.profileImageURL.isNotEmpty()) {
+                imageViewProfileLeft.loadByUrl(message.profileImageURL)
+            } else {
+                imageViewProfileLeft.loadByResource(R.drawable.ic_person)
+            }
         }
     }
 }

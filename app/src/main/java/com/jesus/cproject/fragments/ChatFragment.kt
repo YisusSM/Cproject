@@ -51,8 +51,9 @@ class ChatFragment : Fragment() {
         _view.btnSend.setOnClickListener {
             val messageText = editTextMessage.text.toString()
             if (messageText.isNotEmpty()) {
+                val photo = currentUser.photoUrl?.let { currentUser.photoUrl.toString() }?: run {""}
                 val message = Message(
-                    currentUser.uid, messageText, currentUser.photoUrl.toString(),
+                    currentUser.uid, messageText, photo,
                     Date()
                 )
                 //guardamos el mensaje en firebase
