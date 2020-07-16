@@ -8,18 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.*
 import com.jesus.cproject.R
 import com.jesus.cproject.loadByResource
 import com.jesus.cproject.loadByUrl
+import com.jesus.cproject.toast
 import com.jesus.cproject.utils.CircleTransform
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_chat_item_left.*
 import kotlinx.android.synthetic.main.fragment_chat_item_left.view.*
 import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.android.synthetic.main.fragment_info.view.*
+import java.util.*
+import java.util.EventListener
 
 class InfoFragment : Fragment() {
     private lateinit var _view: View
@@ -41,6 +42,9 @@ class InfoFragment : Fragment() {
         currentUser()
         setUpCurrentUserInformation()
 
+        //Total Messages Firebase Style
+        subscribeToTotalMessagesFirebaseStyle()
+
 
         return _view
     }
@@ -55,7 +59,7 @@ class InfoFragment : Fragment() {
 
     private fun setUpCurrentUserInformation() {
         _view.textViewInfoEmail.text = currentUser.email
-        _view.textViewInfoName.text = currentUser.displayName?.let { currentUser.displayName }
+        _view.textViewInfoName.text = currentUser.displayName?.let { it }
             ?.run { getString(R.string.info_no_name) }
         currentUser.photoUrl?.let {
             Picasso.get().load(currentUser.photoUrl).resize(300, 300).centerCrop()
@@ -66,6 +70,20 @@ class InfoFragment : Fragment() {
         }
 
 
+    }
+
+    private fun subscribeToTotalMessagesFirebaseStyle(){
+        chatDatabaseReference.addSnapshotListener(object : EventListener,
+            com.google.firebase.firestore.EventListener<QuerySnapshot>{
+            override fun onEvent(querySnapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) {
+                exception?.let {
+                    activity!!.toast("Exception $it")
+                    return
+                }
+                querySnapshot?.let { _view.textViewInfoTotalMessages.text = it.size().toString()}
+            }
+
+        })
     }
 
 }
