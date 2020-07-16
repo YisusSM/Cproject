@@ -30,7 +30,7 @@ class InfoFragment : Fragment() {
     private val store: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var chatDatabaseReference: CollectionReference
 
-    private val chatSubscription: ListenerRegistration? = null
+    private var chatSubscription: ListenerRegistration? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,20 +60,20 @@ class InfoFragment : Fragment() {
     private fun setUpCurrentUserInformation() {
         _view.textViewInfoEmail.text = currentUser.email
         _view.textViewInfoName.text = currentUser.displayName?.let { it }
-            ?.run { getString(R.string.info_no_name) }
-        currentUser.photoUrl?.let {
-            Picasso.get().load(currentUser.photoUrl).resize(300, 300).centerCrop()
-                .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
-        }?.run {
-            Picasso.get().load(R.drawable.ic_person).resize(300, 300).centerCrop()
-                .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
+            ?:run { getString(R.string.info_no_name) }
+      currentUser.photoUrl?.let {
+          Picasso.get().load(currentUser.photoUrl).resize(300, 300).centerCrop()
+              .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
+        }?:run {
+          Picasso.get().load(R.drawable.ic_person).resize(300, 300).centerCrop()
+              .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
         }
 
 
     }
 
     private fun subscribeToTotalMessagesFirebaseStyle(){
-        chatDatabaseReference.addSnapshotListener(object : EventListener,
+      chatSubscription =  chatDatabaseReference.addSnapshotListener(object : EventListener,
             com.google.firebase.firestore.EventListener<QuerySnapshot>{
             override fun onEvent(querySnapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) {
                 exception?.let {
@@ -85,5 +85,10 @@ class InfoFragment : Fragment() {
 
         })
     }
+    override fun onDestroyView() {
+        chatSubscription?.remove()
+        super.onDestroyView()
+    }
+
 
 }
