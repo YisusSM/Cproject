@@ -63,13 +63,13 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private fun setUpChatDatabase() {
-        chatDatabaseReference = store.collection("chat")
-    }
+        private fun setUpChatDatabase() {
+            chatDatabaseReference = store.collection("chat")
+        }
 
-    private fun currentUser() {
-        currentUser = mAuth.currentUser!!
-    }
+        private fun currentUser() {
+            currentUser = mAuth.currentUser!!
+        }
 
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
