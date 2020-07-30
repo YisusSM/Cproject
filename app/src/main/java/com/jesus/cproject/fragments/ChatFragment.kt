@@ -13,7 +13,9 @@ import com.google.firebase.firestore.*
 import com.jesus.cproject.R
 import com.jesus.cproject.adapters.ChatAdapter
 import com.jesus.cproject.models.Message
+import com.jesus.cproject.models.TotalMessagesEvent
 import com.jesus.cproject.toast
+import com.jesus.cproject.utils.RxBus
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_chat.view.*
 import java.util.*
@@ -63,11 +65,11 @@ class ChatFragment : Fragment() {
         }
     }
 
-        private fun setUpChatDatabase() {
+    private fun setUpChatDatabase() {
             chatDatabaseReference = store.collection("chat")
         }
 
-        private fun currentUser() {
+    private fun currentUser() {
             currentUser = mAuth.currentUser!!
         }
 
@@ -109,6 +111,7 @@ class ChatFragment : Fragment() {
                     messageList.addAll(messages)
                     adapter.notifyDataSetChanged()
                     _view.recyclerView.smoothScrollToPosition(messageList.size)
+                    RxBus.publish(TotalMessagesEvent(messageList.size))
                 }
             }
 

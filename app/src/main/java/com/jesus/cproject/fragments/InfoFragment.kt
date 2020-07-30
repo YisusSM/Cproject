@@ -12,8 +12,10 @@ import com.google.firebase.firestore.*
 import com.jesus.cproject.R
 import com.jesus.cproject.loadByResource
 import com.jesus.cproject.loadByUrl
+import com.jesus.cproject.models.TotalMessagesEvent
 import com.jesus.cproject.toast
 import com.jesus.cproject.utils.CircleTransform
+import com.jesus.cproject.utils.RxBus
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_chat_item_left.*
 import kotlinx.android.synthetic.main.fragment_chat_item_left.view.*
@@ -43,7 +45,9 @@ class InfoFragment : Fragment() {
         setUpCurrentUserInformation()
 
         //Total Messages Firebase Style
-        subscribeToTotalMessagesFirebaseStyle()
+        //subscribeToTotalMessagesFirebaseStyle()
+        //Total messages event bus reactive style
+        subscribeTotalMessagesEventBusReactiveStyle()
 
 
         return _view
@@ -60,31 +64,41 @@ class InfoFragment : Fragment() {
     private fun setUpCurrentUserInformation() {
         _view.textViewInfoEmail.text = currentUser.email
         _view.textViewInfoName.text = currentUser.displayName?.let { it }
-            ?:run { getString(R.string.info_no_name) }
-      currentUser.photoUrl?.let {
-          Picasso.get().load(currentUser.photoUrl).resize(300, 300).centerCrop()
-              .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
-        }?:run {
-          Picasso.get().load(R.drawable.ic_person).resize(300, 300).centerCrop()
-              .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
+            ?: run { getString(R.string.info_no_name) }
+        currentUser.photoUrl?.let {
+            Picasso.get().load(currentUser.photoUrl).resize(300, 300).centerCrop()
+                .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
+        } ?: run {
+            Picasso.get().load(R.drawable.ic_person).resize(300, 300).centerCrop()
+                .transform(CircleTransform()).into(_view.imageViewInfoAvatar)
         }
 
 
     }
 
-    private fun subscribeToTotalMessagesFirebaseStyle(){
-      chatSubscription =  chatDatabaseReference.addSnapshotListener(object : EventListener,
-            com.google.firebase.firestore.EventListener<QuerySnapshot>{
-            override fun onEvent(querySnapshot: QuerySnapshot?, exception: FirebaseFirestoreException?) {
+    private fun subscribeToTotalMessagesFirebaseStyle() {
+        chatSubscription = chatDatabaseReference.addSnapshotListener(object : EventListener,
+            com.google.firebase.firestore.EventListener<QuerySnapshot> {
+            override fun onEvent(
+                querySnapshot: QuerySnapshot?,
+                exception: FirebaseFirestoreException?
+            ) {
                 exception?.let {
                     activity!!.toast("Exception $it")
                     return
                 }
-                querySnapshot?.let { _view.textViewInfoTotalMessages.text = it.size().toString()}
+                querySnapshot?.let { _view.textViewInfoTotalMessages.text = it.size().toString() }
             }
 
         })
     }
+
+    private fun subscribeTotalMessagesEventBusReactiveStyle() {
+        RxBus.listen(TotalMessagesEvent::class.java).subscribe({
+            _view.textViewInfoTotalMessages.text = "${it.total}"
+        })
+    }
+
     override fun onDestroyView() {
         chatSubscription?.remove()
         super.onDestroyView()

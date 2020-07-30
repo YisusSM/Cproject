@@ -45,10 +45,10 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
             textViewMessageRight.text = message.message
             textViewTimeRight.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
             //Picasso load image here
-            if (message.profileImageURL.isNotEmpty()) {
-                imageViewProfileRight.loadByUrl(message.profileImageURL)
-            } else {
+            if (message.profileImageURL.isEmpty()) {
                 imageViewProfileRight.loadByResource(R.drawable.ic_person)
+            } else {
+                imageViewProfileRight.loadByUrl(message.profileImageURL)
             }
 
         }
@@ -57,7 +57,7 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
     class ViewHolderL(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(message: Message) = with(itemView) {
             textViewMessageLeft.text = message.message
-            textViewTimeLeft.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
+            textViewTimeLeft.text = SimpleDateFormat("hh:mm").format(message.sentAt)
             //Picasso load image here
             if (message.profileImageURL.isNotEmpty()) {
                 imageViewProfileLeft.loadByUrl(message.profileImageURL)
