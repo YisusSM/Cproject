@@ -47,7 +47,7 @@ fun ViewGroup.inflate(layoutId: Int) = LayoutInflater.from(context).inflate(layo
 fun ImageView.loadByUrl(url: String) =
     Picasso.get().load(url).resize(100, 100).centerCrop().transform(CircleTransform()).into(this)
 
-fun ImageView.loadByResource(resource: Int) = Picasso.get().load(resource).resize(100, 100).centerCrop().transform(CircleTransform()).into(this)
+fun ImageView.loadByResource(resource :Int) = Picasso.get().load(resource).resize(100, 100).centerCrop().transform(CircleTransform()).into(this)
 
 inline fun <reified T : Activity> Activity.goToActivity(noinline init: Intent.() -> Unit = {}) {
     val intent = Intent(this, T::class.java)

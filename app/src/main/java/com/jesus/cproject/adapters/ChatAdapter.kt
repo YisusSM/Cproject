@@ -46,7 +46,7 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
             textViewTimeRight.text = SimpleDateFormat("hh:mm:ss").format(message.sentAt)
             //Picasso load image here
             if (message.profileImageURL.isEmpty()) {
-                imageViewProfileRight.loadByResource(R.drawable.ic_person)
+                imageViewProfileRight.setImageResource(R.drawable.ic_person)
             } else {
                 imageViewProfileRight.loadByUrl(message.profileImageURL)
             }
@@ -62,7 +62,7 @@ class ChatAdapter(val item: List<Message>, val userId: String) :
             if (message.profileImageURL.isNotEmpty()) {
                 imageViewProfileLeft.loadByUrl(message.profileImageURL)
             } else {
-                imageViewProfileLeft.loadByResource(R.drawable.ic_person)
+                imageViewProfileLeft.setImageResource(R.drawable.ic_person)
             }
         }
     }
