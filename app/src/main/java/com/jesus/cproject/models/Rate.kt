@@ -6,5 +6,6 @@ data class Rate(
     val text: String = "",
     val rate: Float = 0f,
     val createAt: Date = Date(),
-    val profileImgUrl: String = ""
+    val profileImgUrl: String = "",
+    val userId: String = ""
 )

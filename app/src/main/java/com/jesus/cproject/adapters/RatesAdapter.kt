@@ -21,8 +21,13 @@ class RatesAdapter(private val items: List<Rate>) :
             textViewRate.text = rate.text
             textViewStar.text = "${rate.rate}"
             textViewCalendar.text = SimpleDateFormat("dd MMM, yyyy").format(rate.createAt)
-            Picasso.get().load(rate.profileImgUrl).resize(100, 100).centerCrop()
-                .transform(CircleTransform()).into(imageViewProfile)
+            if (rate.profileImgUrl.isEmpty()) {
+                imageViewProfile.setImageResource(R.drawable.ic_person)
+            } else {
+                Picasso.get().load(rate.profileImgUrl).resize(100, 100).centerCrop()
+                    .transform(CircleTransform()).into(imageViewProfile)
+            }
+
         }
     }
 
