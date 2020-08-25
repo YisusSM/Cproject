@@ -38,6 +38,7 @@ class RatesFragment : Fragment() {
     private var ratesSubscription: ListenerRegistration? = null
     private lateinit var rateBusListener: Disposable
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +51,9 @@ class RatesFragment : Fragment() {
 
         setUpFab()
         setUpRecyclerView()
+
+        subscribeToNewRatings()
+        subscribeToRatings()
         return _view
     }
 
@@ -90,13 +94,14 @@ class RatesFragment : Fragment() {
     }
 
     private fun subscribeToNewRatings() {
-        RxBus.listen(NewRateEvent::class.java).subscribe({
+        rateBusListener = RxBus.listen(NewRateEvent::class.java).subscribe({
             saveRate(it.rate)
         })
     }
 
     private fun subscribeToRatings() {
-        ratesDBref
+
+        ratesSubscription = ratesDBref
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener(object : EventListener,
                 com.google.firebase.firestore.EventListener<QuerySnapshot> {
@@ -105,7 +110,7 @@ class RatesFragment : Fragment() {
                     exception: FirebaseFirestoreException?
                 ) {
                     exception?.let {
-                        activity!!.toast("Exception!!! ${p1.message}")
+                        activity!!.toast("Exception!!! ${exception.message}")
                         return
                     }
                     snapshot?.let {
@@ -118,6 +123,12 @@ class RatesFragment : Fragment() {
                 }
 
             })
+    }
+
+    override fun onDestroyView() {
+        rateBusListener.dispose()
+        ratesSubscription?.remove()
+        super.onDestroyView()
     }
 }
 

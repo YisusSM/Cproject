@@ -17,6 +17,7 @@ import com.jesus.cproject.toast
 import com.jesus.cproject.utils.CircleTransform
 import com.jesus.cproject.utils.RxBus
 import com.squareup.picasso.Picasso
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_chat_item_left.*
 import kotlinx.android.synthetic.main.fragment_chat_item_left.view.*
 import kotlinx.android.synthetic.main.fragment_info.*
@@ -33,6 +34,8 @@ class InfoFragment : Fragment() {
     private lateinit var chatDatabaseReference: CollectionReference
 
     private var chatSubscription: ListenerRegistration? = null
+
+    private lateinit var infoBusListener: Disposable
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -93,13 +96,14 @@ class InfoFragment : Fragment() {
     }
 
     private fun subscribeTotalMessagesEventBusReactiveStyle() {
-        RxBus.listen(TotalMessagesEvent::class.java).subscribe({
+        infoBusListener = RxBus.listen(TotalMessagesEvent::class.java).subscribe({
             _view.textViewInfoTotalMessages.text = "${it.total}"
         })
     }
 
     override fun onDestroyView() {
         chatSubscription?.remove()
+        infoBusListener.dispose()
         super.onDestroyView()
     }
 
