@@ -29,19 +29,19 @@
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:card_view="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 card_view:layout_constraintTop_toBottomOf="@id/textViewRate">
 
                 <View
                     android:id="@+id/viewSeparator"
-                    :layout_constraintTop_toBottomOf="@id/textViewRate"
+                    card_view:layout_constraintTop_toBottomOf="@id/textViewRate"
                     android:layout_width="0dp"
                     android:layout_height="0.3dp"
                     android:background="@color/colorDivider"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="" />
+                    card_view:layout_constraintStart_toStartOf="parent"/>
 
                 <ImageView
                     android:id="@+id/imageViewCalendar"

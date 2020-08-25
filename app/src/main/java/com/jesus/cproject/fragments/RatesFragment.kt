@@ -9,15 +9,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.*
 import com.jesus.cproject.R
 import com.jesus.cproject.adapters.RatesAdapter
 import com.jesus.cproject.dialogues.RateDialog
+import com.jesus.cproject.models.NewRateEvent
 import com.jesus.cproject.models.Rate
+import com.jesus.cproject.toast
+import com.jesus.cproject.utils.RxBus
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_rates.view.*
+import java.util.EventListener
 
 
 class RatesFragment : Fragment() {
@@ -59,14 +61,66 @@ class RatesFragment : Fragment() {
         _view.recyclerView.itemAnimator = DefaultItemAnimator()
         _view.recyclerView.adapter = adapter
     }
+
     private fun setUpFab() {
         _view.fabRating.setOnClickListener { RateDialog().show(fragmentManager!!, "") }
 
     }
-    private fun setUpRatesDB(){
+
+    private fun setUpRatesDB() {
         ratesDBref = store.collection("rates")
     }
-    private fun setUpCurrentUser(){
+
+    private fun setUpCurrentUser() {
         currentUser = mAuth.currentUser!!
     }
+
+    private fun saveRate(rate: Rate) {
+        val newRating = HashMap<String, Any>()
+        newRating["text"] = rate.text
+        newRating["rate"] = rate.rate
+        newRating["createdAt"] = rate.createAt
+        newRating["profileImgUrl"] = rate.profileImgUrl
+
+        ratesDBref.add(newRating).addOnCompleteListener {
+            activity!!.toast("rating added!!")
+        }.addOnFailureListener {
+            activity!!.toast("Rating error, try again!!!")
+        }
+    }
+
+    private fun subscribeToNewRatings() {
+        RxBus.listen(NewRateEvent::class.java).subscribe({
+            saveRate(it.rate)
+        })
+    }
+
+    private fun subscribeToRatings() {
+        ratesDBref
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .addSnapshotListener(object : EventListener,
+                com.google.firebase.firestore.EventListener<QuerySnapshot> {
+                override fun onEvent(
+                    snapshot: QuerySnapshot?,
+                    exception: FirebaseFirestoreException?
+                ) {
+                    exception?.let {
+                        activity!!.toast("Exception!!! ${p1.message}")
+                        return
+                    }
+                    snapshot?.let {
+                        ratesList.clear()
+                        val rates = it.toObjects(Rate::class.java)
+                        ratesList.addAll(rates)
+                        adapter.notifyDataSetChanged()
+                        _view.recyclerView.smoothScrollToPosition(0)
+                    }
+                }
+
+            })
+    }
 }
+
+
+
+

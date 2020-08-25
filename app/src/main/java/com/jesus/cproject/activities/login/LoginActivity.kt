@@ -104,11 +104,11 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data!!)
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == requestCodeGoogleSignInFlag){
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data!!)
+            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result!!.isSuccess){
-                val account = result!!.signInAccount
+                val account = result.signInAccount
                 loginByGoogleAccountIntoFirebase(account!!)
             }
         }

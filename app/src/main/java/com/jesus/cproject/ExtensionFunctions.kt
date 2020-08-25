@@ -97,7 +97,7 @@ fun Activity.isValidConfirmPassword(password: String, confirmPassword: String): 
 
 }
 
-private fun Activity.addOnAdapterChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
+/*private fun Activity.addOnAdapterChangeListener(onPageChangeListener: ViewPager.OnPageChangeListener) {
 
-}
+}*/
 
