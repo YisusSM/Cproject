@@ -41,6 +41,7 @@
             android:inputType="textMultiLine"
             android:padding="8dp"
             android:textColor="@color/colorTextBlack"
+            android:maxLines="3"
             android:textColorHint="@color/colorPrimaryText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnSend"
